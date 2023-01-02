@@ -1,34 +1,85 @@
-extends partial/layout
-
-include mixins
-
-block site_title
-    != page.title + " · " + config.title
-
-block description
-    - var desc = page.desc || strip_html(page.content).replace(/^\s*/, '').replace(/\s*$/, '').substring(0, 150);
-    meta(name="description", content=desc)
-
-block content
-  .autopagerize_page_element: .content: .post-page
-    include mixins
-    +make_post(page, true)
-    .share
-      .evernote
-        a.fa.fa-bookmark(href="",onclick="javascript:join_favorite()", ref="sidebar")
-      .weibo
-        a.fa.fa-weibo(href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&title=',e(d.title),'&appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));")
-      .twitter
-        a.fa.fa-twitter(href=url_for("http://twitter.com/home?status="+","+config.url+"/"+page.path+","+config.title+","+page.title+",;"))
-    - var prev = page.prev ? page.prev.path : false;
-    - var next = page.next ? page.next.path : false;
-    .pagination
-      ul.clearfix
-        if prev
-          li.pre.pagbuttons
-            a.btn(role="navigation",href=url_for(prev), title=page.prev.title)!= __('prev_post')
-        if next
-          li.next.pagbuttons
-            a.btn(role="navigation",href=url_for(next), title=page.next.title)!= __('next_post')
-    if page.comments
-        include partial/comments
+<!DOCTYPE html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="X-UA-Compatible" content="IE=edge"><meta name="author" content="Core"><title>2021年终总结及2022规划 · Welcome to my blog</title><meta name="description" content="2021年过去了，我觉得有必要去回顾一下，从中思考，让2022过得更符合自己的预期。
+工作
+工作上的输出毋庸置疑。这一年中，前期已扛住方向上的大部分需求，让团队安稳度过缺人且业务飞速增长的时期，同时也在稳定性上加入了降级的功能且避免了2-3次的P0事故，做出了超越校招生的贡献。当然，上半年的输出已经"><meta name="keywords" content="极限博客,极限Blog,博客,极限"><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" name="viewport"><meta content="yes" name="apple-mobile-web-app-capable"><meta content="black" name="apple-mobile-web-app-status-bar-style"><meta content="telephone=no" name="format-detection"><meta name="renderer" content="webkit"><link rel="stylesheet" href="/css/style.css"><link rel="stylesheet" href="/css/blog_basic.css"><link rel="stylesheet" href="/css/font-awesome.min.css"><link rel="alternate" type="application/atom+xml" title="ATOM 1.0" href="/atom.xml"><script src="/js/jquery.js"></script><meta name="generator" content="Hexo 5.4.2"></head><body><div class="sidebar animated fadeInDown"><div class="logo-title"><div class="title"><img src="/images/logo@2x.png" style="width:127px;"><h3 title=""><a href="/">Welcome to my blog</a></h3><div class="description"><p>心之所愿，无事不成。<br> Nothing is impossible to a willing heart.</p></div></div></div><ul class="social-links"><li><a target="_blank" rel="noopener" href="https://github.com/mrcore"><i class="fa fa-github"></i></a></li><li><a href="mailto:x@jixian.io"><i class="fa fa-envelope"></i></a></li><li><a target="_blank" rel="noopener" href="http://sighttp.qq.com/authd?IDKEY="><i class="fa fa-qq"></i></a></li><li><a target="_blank" rel="noopener" href="https://zhihu.com/people/"><i class="fa fa-mortar-board"></i></a></li></ul><div class="footer"><div class="p"> <span>© 2017 - 2020 </span><i class="fa fa-star"></i><span> Core</span></div><div class="by_farbox"><span>Powered by </span><a href="https://hexo.io/zh-cn/" target="_blank">Hexo </a><span> & </span><a href="https://github.com/mrcore/hexo-theme-Anatole-Core" target="_blank">Anatole-Core  </a></div><div class="beian"><a href="http://www.beian.miit.gov.cn/" target="_blank">粤ICP备15011643号</a><span style="height:10px;margin-left: 10px;">|</span><img src="/images/gongan.png" style="height:10px;margin-left: 10px;position: relative;top: 1px;"><span style="margin-left: 2px;">粤公网安备 44030402003967号</span></div></div></div><div class="main"><div class="page-top animated fadeInDown"><div class="nav"><li><a href="/">首页</a></li><li><a href="/archives">归档</a></li><li><a href="/tags">标签</a></li><li><a href="/about">关于</a></li><li><a href="/guestbook">留言</a></li></div><div class="information"><div class="back_btn"><li><a class="fa fa-chevron-left" onclick="window.history.go(-1)"> </a></li></div></div></div><div class="autopagerize_page_element"><div class="content"><div class="post-page"><div class="post animated fadeInDown"><div class="post-title"><h3><a>2021年终总结及2022规划</a></h3></div><div class="post-content"><p>2021年过去了，我觉得有必要去回顾一下，从中思考，让2022过得更符合自己的预期。</p>
+<p>工作</p>
+<p>工作上的输出毋庸置疑。这一年中，前期已扛住方向上的大部分需求，让团队安稳度过缺人且业务飞速增长的时期，同时也在稳定性上加入了降级的功能且避免了2-3次的P0事故，做出了超越校招生的贡献。当然，上半年的输出已经让领导们看到，我也很荣幸地升级了。虽然答辩的效果不是太满意，能感觉到自己对业务和方向上的思考还是不足的，这也是当前困惑和阻碍自己成长的地方。</p>
+<p>下半年的输出相对没那么多，承接了athena新方向，但因为项目的技术还在一个探索的时期，所以相对耗费的精力更多了。不过稳定性和性能优化上还是大有贡献，从定时任务优化、级联更新优化、中台并发优化等都有很好的数据。</p>
+<p>总结上说，对于1-2的级别来说，输出是远超预期的；但对于2-1的级别，只是相对平庸。需要有更多的业务思考和技术的积累，才能产生更优秀的效果，获取更好的回报。</p>
+<p>软素质方面，其实对自己是特别不满意的。</p>
+<p>项目排期。排期实在一塌糊涂，完全已经把私人时间都算尽了（慢慢地不断地死循环，无法思考，排期越来越糟糕），这样其实对自己和别人都是不负责任的。该拖则拖，好好考虑项目开发时间且考虑收益以及其他依赖方向的时间，合理安排才是对的。遇到特殊情况就沟通好，特殊处理，累死自己没必要，保证好交付的质量。</p>
+<p>沟通。从心地觉得自己对于和别人（除熟悉的人或熟悉的领域）沟通还是惧怕的。这点要克服必须要提升自己的业务理解能力和技术，不懂就问这点非常重要，假若一直不懂，强行做出来的东西就是浪费时间，后期还得去维护他。往后必须要想到这点，强迫自己去沟通。技术评审等等也是，多思考一些，多沟通一些，争取开发中无需再修改文档，争取会议中多有一点发言。</p>
+<p>情绪控制</p>
+<p>给自己的情绪控制打分，应该就是6&#x2F;10了。有些时候，会觉得自己特别不耐烦，无意中也伤害了一些人，包括自己。</p>
+<p>未来需要更好地压制自己。</p>
+<p>对于伸手党，虽然他们可以那么不要脸，但我们也是要适当压低自己的不耐烦，要更有技巧地去引导他们去自己寻找答案。</p>
+<p>对于简单的问题，不要过于轻蔑和理所当然，别人自有难处，都是为了工作，好好对待。</p>
+<p>当然，该拒绝的就果断拒绝。</p>
+<p>技术</p>
+<p>技术上就基本是原地踏步，看了几本书，但是实际没有突破，还是理解不深和没有时间去实践。</p>
+<p>未来的预期还是先往数据流的方向去做。flink &#x2F; 数据分析 &#x2F; olap的应用 等等需要更深入地学习和实践。</p>
+<p>其次是稳定性方面的，看看能不能有好的想法去优化。</p>
+<p>这部分必须做出计划和行动，不能只是口嗨。</p>
+<p>生活</p>
+<ul>
+<li>户口</li>
+</ul>
+<p>户口目前很无语，原先是打算毕业把户口迁移到深圳，顺带领一笔1w5的补贴。但户口迁到一半，政府那边却迟迟没有短信或者电话，后面迁移材料都过期了。后来才发现什么非深圳号码是收不到短信的，我真tm服了，交了那么多税，zf就tm这种服务。</p>
+<p>后续补贴取消了，那就算了。深圳户口也没什么作用，未来也不会留在深圳。房价太贵了，且各种基建、医疗、人文、教育都不太符合一线城市的标准了，性价比太低（重点吐槽深圳的单车道，地太少了对吧，直接单车、电动车、行人合到一条道）。</p>
+<p>还是先考虑一下广州。目前的方向是先了解如何落户广州，并且交满一年社保，然后买房上车。</p>
+<ul>
+<li>健康</li>
+</ul>
+<p>实际6月份就预约了一次体检，结果没时间就一直拖到最后。2021年的最后一个周六，独自去体验了一次体检。流程就不说了，爱康国宾太多人了，完全没感受到vip的待遇，一大早去抽血，熬到最后彩超完成都12点多了，中间不能吃东西。</p>
+<p>直接说体检结果吧。体重超重了，哈哈哈。原本没觉得自己特别胖，测完发现bmi到了24.1，对比一下大一的我，完全不敢直视。2022年必须减肥，暴廋。建议是控制一下饮食，食堂饭虽然免费，但也不应该每次都盛得满满当当，中午就不吃主食了，多点蔬菜和肉蛋吧。晚上回来尽量无氧运动一下（上年才运动了4次，加上switch的体能游戏4-5次，又是对当初买该游戏时的理由进行无情鞭挞）。</p>
+<p>除了体重，还被医生提醒了前列腺有几个强回声光斑（前列腺钙化灶），应该是属于正常。建议是不久坐，多喝水。这个还是能调节的，之前一天一瓶水，现在改两瓶水吧。公司里还是得搞个升降桌，站着也能燃烧脂肪。</p>
+<p>自己也感觉到甲状腺有点难受，加钱去照了一下。果不其然双侧甲状腺囊性结节，医生大概说没什么事情。但我感觉是自己熬夜太多、作息不规律而导致的。往后还是多运动，早点睡（今年的目标时1点前必睡，8点起来，9点多能吃到公司早餐）</p>
+<ul>
+<li>社交</li>
+</ul>
+<p>基本没有任何社交。每个周末都是一个人闲逛。今年还有个特别的事情，遇到了以前的女神，可还是一直不敢踏出那一步，希望2022年能想通一点事情+遇到很好的机遇，把她带回来吧。</p>
+<ul>
+<li>家庭</li>
+</ul>
+<p>2021年，家庭最大的事情就是哥哥结婚买房了，就有幸国庆的时候和家人去了一趟上海，认认真真地玩了一趟，确实是很难得有家人团聚游玩的时光，未来这种乐趣应该也是越来越少了，好好珍惜每一次和家人团聚的时间吧。</p>
+<ul>
+<li>搬家</li>
+</ul>
+<p>从刚到深圳就租了这个房间，到6月份就满一年了。其实住的还算不错，能熬走了3个室友哈哈，室友都比较安静和干净，房价还挺便宜的（相对深圳南山的普遍价格）。可惜公司那时说要搬到深圳湾 + 房东要卖房，于是还是搬走了。</p>
+<p>原本打算搬个一室一厅，结果被价格劝退了，花比原先贵1000元租了隔壁马路的房间。优点是多了一个阳台，采光好了很多，人就没那么压抑，而且地方也是大了一点，能搞一套桌搭等等。这几点也是满意的地方。</p>
+<p>但是后面发现阳台的作用其实不大，而且靠近马路，特别吵。而室友的妈妈经常来住，导致出入房间都很不方便。有点小后悔，等满一年马上搬。</p>
+<p>说说搬家中的撒比事，我居然认为我只有一点点东西，而且新家不远。就自己蚂蚁搬家那样去搬，结果自己来回了十几趟，小区保安都笑我傻，服了自己了。</p>
+<p>理财</p>
+<p>理财太坑了，年初还有2000元的盈利，春节后直接倒亏5000，花了一整年的时间才回本。</p>
+<p>其实个中原因还是自己啥都不懂，乱买。后面还是得加强学习金融知识，争取形成自己的一套方法论，早日盈利达到目标。</p>
+<p>摄影</p>
+<p>今年5月份，想到了买相机，于是马上入手了索尼a6000 + sima 30 1.4 + sony 18-135。 周末出去拍了几次，发现自己真的对摄影很感兴趣，就趁着狗东618的24期免息买了索尼a73 + 腾龙28-200镜头。</p>
+<p>有了相机，基本每个周末我都会出去拍照，南山、莲花山、海上世界、小梧桐、南山古城、前湾公园、文和友、欢乐谷、万象天地、塘朗山、欢乐海岸等等都去过了。非常感谢相机，让我有出门的理由。</p>
+<p>发一下美照吧</p>
+<p>总结一下，今年买相机之后拍了不少照片，虽然拍照技术刚起步，都不咋地，但也吸取了不少经验，让我不在孤独在呆在基地里，钱也是花值得的，至少拍摄途中是快乐的。</p>
+<p>后续的话，也多学习摄影的技术，提升自己的能力，有空也学习一下后期。</p>
+<p>其次是需要做好规划，虽说摄影过程很美好，但是也不能一直浪费时间。今年出去拍照的大部分时间没有规划好，也没想过要拍什么，导致出片率太低了，真的不如呆在基地学习一下后期。</p>
+<p>还有的是多找机会出去旅游，外面的世界太大太美了，趁着年轻，没有家庭的负担，多出去走走。</p>
+<p>2022规划</p>
+<ol>
+<li>解决户口问题，看看怎么落户广州。</li>
+<li>准备买房，看看需要达到什么条件才能买广州的房。</li>
+<li>技术上把etl这一套吃透并实践一个项目吧。其次ai不要丢下。</li>
+<li>软素质需要更提高下。沟通、项目管理、业务方向感。</li>
+<li>理财收益达到4%以上。有自己的方法论。</li>
+<li>摄影找到10张以上年度最佳照片</li>
+<li>旅游地方至少5个。而且必须提前规划，细节都不要放过</li>
+<li>减肥到 60kg。恢复8块腹肌</li>
+</ol>
+</div><div class="post-footer"><div class="meta"><div class="info"><i class="fa fa-sun-o"></i><span class="date">2022-05-14</span><i class="fa fa-tag"></i><a class="tag" href="/categories/总结/" title="总结">总结 </a><span class="leancloud_visitors"></span></div></div></div></div><div class="share"><div class="evernote"><a class="fa fa-bookmark" href="" onclick="javascript:join_favorite()" ref="sidebar"></a></div><div class="weibo"><a class="fa fa-weibo" href="javascript:void((function(s,d,e){try{}catch(e){}var f='http://service.weibo.com/share/share.php?',u=d.location.href,p=['url=',e(u),'&amp;title=',e(d.title),'&amp;appkey=2924220432'].join('');function a(){if(!window.open([f,p].join(''),'mb',['toolbar=0,status=0,resizable=1,width=620,height=450,left=',(s.width-620)/2,',top=',(s.height-450)/2].join('')))u.href=[f,p].join('');};if(/Firefox/.test(navigator.userAgent)){setTimeout(a,0)}else{a()}})(screen,document,encodeURIComponent));"></a></div><div class="twitter"><a class="fa fa-twitter" target="_blank" rel="noopener" href="http://twitter.com/home?status=,http://example.com/2022/05/14/2021年度总结/,Welcome to my blog,2021年终总结及2022规划,;"></a></div></div><div class="pagination"><ul class="clearfix"><li class="pre pagbuttons"><a class="btn" role="navigation" href="/2022/05/14/2021-11-29%E7%A2%8E%E7%A2%8E%E5%BF%B5/" title="2021年11月胡思乱想">上一篇</a></li></ul></div><script src="/js/visitors.js"></script><a id="comments"></a><div id="vcomments" style="margin:0 30px;"></div><script src="//cdn1.lncld.net/static/js/3.0.4/av-min.js"></script><script src="//cdn.jsdelivr.net/gh/xcss/valine@latest/dist/Valine.min.js"></script><script>var valine = new Valine({
+  el:'#vcomments',
+  notify:false || false, 
+  verify:false|| false, 
+  app_id:'',
+  app_key:'',
+  placeholder:'念念不忘，必有回响...',
+  path: window.location.pathname,
+  serverURLs: '',
+  visitor:true,
+  recordIP:true,
+  avatar:'mp'
+})</script></div></div></div></div><script src="/js/jquery-migrate-1.2.1.min.js"></script><script src="/js/jquery.appear.js"></script><script src="/js/add-bookmark.js"></script><script src="/js/baidu-tongji.js"></script></body></html>
